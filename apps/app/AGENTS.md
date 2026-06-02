@@ -1,3 +1,38 @@
-# Expo HAS CHANGED
+Expo App Folder structure
 
-Read the exact versioned docs at https://docs.expo.dev/versions/v56.0.0/ before writing any code.
+src
+│
+app
+│
+├──(onboarding)
+│
+├──(auth)
+│   ├──signin.tsx
+│   ├──signup.tsx
+│   ├──forgot-password.tsx
+│   ├──otp-verification.tsx
+│   └──reset-password.tsx
+│
+├──(tabs)
+│   └──index.tsx
+│
+├──_layout.tsx
+├──index.tsx
+│
+├──components
+│ └──ui
+│   ├──Header.tsx
+│   ├──Input.tsx
+│   └──Button.tsx
+│
+├──redux
+│ ├──api
+│ │ └──baseApi.ts
+│ ├──slices
+│ │ └──authSlice.ts
+│ │ 
+│ └──store.ts
+│
+└──utils
+  └──useTheme.ts
+
