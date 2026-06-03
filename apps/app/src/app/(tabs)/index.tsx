@@ -13,10 +13,12 @@ import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeIn, FadeInDown, Layout } from "react-native-reanimated";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
 export default function DashboardScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const [isHighRisk, setIsHighRisk] = useState(true);
 
@@ -164,7 +166,7 @@ export default function DashboardScreen() {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.actionButton}
-            onPress={() => Alert.alert("Report Info", isHighRisk ? "Opening exposure report details..." : "Opening latest report details...")}
+            onPress={() => router.push("/report" as any)}
           >
             <Text style={styles.actionButtonText}>
               {isHighRisk ? "REVIEW EXPOSURE REPORT" : "VIEW LATEST REPORT"}

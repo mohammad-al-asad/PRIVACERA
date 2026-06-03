@@ -1,4 +1,3 @@
-import React from "react";
 import { Tabs } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 
@@ -27,18 +26,18 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Shield",
+          title: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="shield" size={size} color={color} />
+            <Feather name="home" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="vault"
+        name="report"
         options={{
-          title: "Vault",
+          title: "Report",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="lock" size={size} color={color} />
+            <Feather name="file-text" size={size} color={color} />
           ),
         }}
       />

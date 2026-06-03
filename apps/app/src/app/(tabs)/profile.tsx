@@ -11,8 +11,10 @@ import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function ProfileScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
 
   const handleEditProfile = () => {
@@ -81,7 +83,7 @@ export default function ProfileScreen() {
           <View style={styles.cardContainer}>
             {/* Row 1: Profile Data */}
             <TouchableOpacity
-              onPress={() => handleAction("Profile Data")}
+              onPress={() => router.push("/profile-data" as any)}
               style={styles.rowItem}
               activeOpacity={0.7}
             >
@@ -109,7 +111,7 @@ export default function ProfileScreen() {
 
             {/* Row 3: Subscription */}
             <TouchableOpacity
-              onPress={() => handleAction("Subscription")}
+              onPress={() => router.push("/subscription" as any)}
               style={styles.rowItem}
               activeOpacity={0.7}
             >
@@ -148,7 +150,7 @@ export default function ProfileScreen() {
           <View style={styles.cardContainer}>
             {/* Row 1: Notification Settings */}
             <TouchableOpacity
-              onPress={() => handleAction("Notification Settings")}
+              onPress={() => router.push("/notifications" as any)}
               style={styles.rowItem}
               activeOpacity={0.7}
             >
@@ -162,7 +164,7 @@ export default function ProfileScreen() {
 
             {/* Row 2: Help & Support */}
             <TouchableOpacity
-              onPress={() => handleAction("Help & Support")}
+              onPress={() => router.push("/support" as any)}
               style={styles.rowItem}
               activeOpacity={0.7}
             >
