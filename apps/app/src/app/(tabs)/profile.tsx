@@ -97,7 +97,7 @@ export default function ProfileScreen() {
 
             {/* Row 2: Login & Security */}
             <TouchableOpacity
-              onPress={() => handleAction("Login & Security")}
+              onPress={() => router.push("/login-security")}
               style={styles.rowItem}
               activeOpacity={0.7}
             >
@@ -178,7 +178,7 @@ export default function ProfileScreen() {
 
             {/* Row 3: Log Out */}
             <TouchableOpacity
-              onPress={() => handleAction("Log Out")}
+              onPress={() => router.navigate("/(auth)/index")}
               style={styles.rowItem}
               activeOpacity={0.7}
             >

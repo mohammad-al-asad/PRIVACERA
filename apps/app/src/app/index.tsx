@@ -15,7 +15,7 @@ export default function Index() {
   }, []);
 
   const isAuthenticated = false;
-  const isFirstTime = false;
+  const isFirstTime = true;
 
   if (loading) {
     return (
@@ -24,7 +24,7 @@ export default function Index() {
         <View style={styles.centerContainer}>
           <Animated.Image
             entering={FadeIn.delay(200).duration(800)}
-            source={require("@/assets/images/app/fingerprint.png")}
+            source={require("@/assets/images/app/logo.png")}
             style={styles.logo}
           />
           <Animated.Text entering={FadeInDown.delay(400).duration(600)} style={styles.title}>
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     resizeMode: "contain",
-    tintColor: "#FFFFFF",
     marginBottom: 24,
   },
   title: {

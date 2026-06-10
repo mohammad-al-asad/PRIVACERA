@@ -1,7 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
+import { Image } from "expo-image";
+import Animated, {
+  FadeIn,
+  FadeInDown,
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withSequence,
+} from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
 import Header from "@/components/ui/Header";
 import Button from "@/components/ui/Button";
@@ -9,58 +18,153 @@ import Button from "@/components/ui/Button";
 export default function OnboardingFirst() {
   const router = useRouter();
 
+  // Floating animation values for the badges
+  const float1 = useSharedValue(0);
+  const float2 = useSharedValue(0);
+  const float3 = useSharedValue(0);
+  const float4 = useSharedValue(0);
+
+  // Breathing animation values for the background glow
+  const scale = useSharedValue(1);
+  const glowOpacity = useSharedValue(0.4);
+
+  React.useEffect(() => {
+    scale.value = withRepeat(
+      withSequence(
+        withTiming(1.08, { duration: 2500 }),
+        withTiming(1, { duration: 2500 })
+      ),
+      -1,
+      true
+    );
+
+    glowOpacity.value = withRepeat(
+      withSequence(
+        withTiming(0.6, { duration: 2500 }),
+        withTiming(0.3, { duration: 2500 })
+      ),
+      -1,
+      true
+    );
+
+    // Dynamic, out-of-sync floating loops
+    float1.value = withRepeat(
+      withSequence(
+        withTiming(-6, { duration: 2200 }),
+        withTiming(6, { duration: 2200 })
+      ),
+      -1,
+      true
+    );
+
+    float2.value = withRepeat(
+      withSequence(
+        withTiming(5, { duration: 2600 }),
+        withTiming(-5, { duration: 2600 })
+      ),
+      -1,
+      true
+    );
+
+    float3.value = withRepeat(
+      withSequence(
+        withTiming(-7, { duration: 2400 }),
+        withTiming(7, { duration: 2400 })
+      ),
+      -1,
+      true
+    );
+
+    float4.value = withRepeat(
+      withSequence(
+        withTiming(4, { duration: 2000 }),
+        withTiming(-4, { duration: 2000 })
+      ),
+      -1,
+      true
+    );
+  }, []);
+
+  const animatedGlowStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+      opacity: glowOpacity.value,
+    };
+  });
+
+  const animatedFloat1 = useAnimatedStyle(() => ({
+    transform: [{ translateY: float1.value }],
+  }));
+
+  const animatedFloat2 = useAnimatedStyle(() => ({
+    transform: [{ translateY: float2.value }],
+  }));
+
+  const animatedFloat3 = useAnimatedStyle(() => ({
+    transform: [{ translateY: float3.value }],
+  }));
+
+  const animatedFloat4 = useAnimatedStyle(() => ({
+    transform: [{ translateY: float4.value }],
+  }));
+
   return (
     <View style={styles.container}>
-      <Header />
+      <Header showBorder={false} transparent={true} />
 
       <View style={styles.body}>
         {/* Title and Subtitle */}
         <Animated.View entering={FadeInDown.delay(100).duration(600)} style={styles.textContainer}>
-          <Text style={styles.title}>Control your digital fingerprint</Text>
+          <Text style={styles.title}>Take Control</Text>
           <Text style={styles.subtitle}>
-           Let us scan the internet for exposed personal data and see what may be putting you and your family at risk.
+            Let us scan the internet for exposed personal data and see what may be putting you and your family at risk.
           </Text>
         </Animated.View>
 
-        {/* Floating Badges with Connection Lines */}
+        {/* Floating Badges with Fingerprint Centerpiece */}
         <View style={styles.visualContainer}>
-          {/* Connection Lines */}
-          <View style={styles.connectionLine1} />
-          <View style={styles.connectionLine2} />
-          <View style={styles.connectionLine3} />
+          <View style={styles.fingerprintGroup}>
 
-          {/* Badges */}
-          <Animated.View
-            entering={FadeIn.delay(300).duration(800)}
-            style={[styles.badge, styles.phoneBadge]}
-          >
-            <Feather name="smartphone" size={18} color="#FF453A" />
-            <Text style={styles.badgeText}>Phone exposed</Text>
-          </Animated.View>
+            {/* Centered Fingerprint Image */}
+            <Image
+              source={require("@/assets/images/app/fingerprint.png")}
+              style={styles.fingerprintImage}
+              contentFit="contain"
+            />
 
-          <Animated.View
-            entering={FadeIn.delay(500).duration(800)}
-            style={[styles.badge, styles.addressBadge]}
-          >
-            <Feather name="map-pin" size={18} color="#FFD60A" />
-            <Text style={styles.badgeText}>Address found</Text>
-          </Animated.View>
+            {/* Badges */}
+            <Animated.View
+              entering={FadeIn.delay(300).duration(800)}
+              style={[styles.badge, styles.phoneBadge, animatedFloat1]}
+            >
+              <Feather name="smartphone" size={16} color="#FF453A" />
+              <Text style={styles.badgeText}>Phone exposed</Text>
+            </Animated.View>
 
-          <Animated.View
-            entering={FadeIn.delay(700).duration(800)}
-            style={[styles.badge, styles.emailBadge]}
-          >
-            <Feather name="mail" size={18} color="#FF453A" />
-            <Text style={styles.badgeText}>Email breach</Text>
-          </Animated.View>
+            <Animated.View
+              entering={FadeIn.delay(500).duration(800)}
+              style={[styles.badge, styles.addressBadge, animatedFloat2]}
+            >
+              <Feather name="map-pin" size={16} color="#FF9F0A" />
+              <Text style={styles.badgeText}>Address risk</Text>
+            </Animated.View>
 
-          <Animated.View
-            entering={FadeIn.delay(900).duration(800)}
-            style={[styles.badge, styles.profileBadge]}
-          >
-            <Feather name="user" size={18} color="#30D158" />
-            <Text style={styles.badgeText}>Public profile</Text>
-          </Animated.View>
+            <Animated.View
+              entering={FadeIn.delay(700).duration(800)}
+              style={[styles.badge, styles.familyBadge, animatedFloat3]}
+            >
+              <Feather name="users" size={16} color="#FF453A" />
+              <Text style={styles.badgeText}>Data Brokers</Text>
+            </Animated.View>
+
+            <Animated.View
+              entering={FadeIn.delay(900).duration(800)}
+              style={[styles.badge, styles.brokerBadge, animatedFloat4]}
+            >
+              <Feather name="search" size={16} color="#FF9F0A" />
+              <Text style={styles.badgeText}>Breach Data</Text>
+            </Animated.View>
+          </View>
         </View>
 
         {/* Bottom Section */}
@@ -101,7 +205,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   title: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: "700",
     color: "#FFFFFF",
     textAlign: "center",
@@ -119,39 +223,39 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  fingerprintGroup: {
+    width: 320,
+    height: 320,
+    justifyContent: "center",
+    alignItems: "center",
     position: "relative",
   },
-  // Connection lines styled behind the badges
-  connectionLine1: {
-    position: "absolute",
-    left: "25%",
-    top: "35%",
-    width: "50%",
-    height: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
+  fingerprintImage: {
+    width: 130,
+    height: 130,
+    zIndex: 2,
   },
-  connectionLine2: {
+  glow: {
     position: "absolute",
-    left: "30%",
-    top: "35%",
-    width: 1,
-    height: "20%",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
-  },
-  connectionLine3: {
-    position: "absolute",
-    left: "50%",
-    top: "45%",
-    width: "25%",
-    height: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "rgba(255, 255, 255, 0.04)",
+    shadowColor: "#FFFFFF",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowRadius: 40,
+    elevation: 4,
+    zIndex: 1,
   },
   badge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(28, 28, 30, 0.7)",
+    backgroundColor: "rgba(28, 28, 30, 0.75)",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(255, 255, 255, 0.12)",
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -161,73 +265,37 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
+    zIndex: 3,
   },
   badgeText: {
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "600",
-    marginLeft: 10,
+    marginLeft: 8,
     fontFamily: "System",
   },
-  // Position adjustments for badges
+  // Precise float positions matching the layout of the second screen
   phoneBadge: {
-    left: 30,
-    top: "20%",
+    top: 30,
+    left: 15,
   },
   addressBadge: {
-    right: 30,
-    top: "32%",
+    top: 65,
+    right: 15,
   },
-  emailBadge: {
-    left: 20,
-    bottom: "35%",
+  familyBadge: {
+    bottom: 65,
+    left: 15,
   },
-  profileBadge: {
-    right: 40,
-    bottom: "22%",
+  brokerBadge: {
+    bottom: 30,
+    right: 20,
   },
-
   // Footer Styles
   footer: {
     width: "100%",
     alignItems: "center",
     paddingHorizontal: 24,
-  },
-  indicatorContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 28,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#3A3A3C",
-    marginHorizontal: 5,
-  },
-  activeDot: {
-    backgroundColor: "#FFFFFF",
-    width: 18, // Slightly elongated active dot
-  },
-  button: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 28,
-    width: "100%",
-    height: 56,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 18,
-    shadowColor: "#FFF",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  buttonText: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "System",
   },
   linkText: {
     color: "#8E8E93",

@@ -1,13 +1,27 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function Header() {
+interface HeaderProps {
+  style?: ViewStyle;
+  showBorder?: boolean;
+  transparent?: boolean;
+}
+
+export default function Header({ style, showBorder = true, transparent = false }: HeaderProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.headerContainer, { paddingTop: insets.top + 8 }]}>
+    <View
+      style={[
+        styles.headerContainer,
+        { paddingTop: insets.top + 8 },
+        transparent && { backgroundColor: "transparent" },
+        !showBorder && { borderBottomWidth: 0 },
+        style,
+      ]}
+    >
       <View style={styles.content}>
         <Image
           source={require("@/assets/images/app/textLogo.png")}

@@ -26,7 +26,7 @@ export default function SignInScreen() {
     // Perform authentication logic here
     console.log("Sign in with:", email, password);
     router.dismissAll();
-    router.replace('/(tabs)' as any);
+    router.replace('/premium' as any);
   };
 
   return (
