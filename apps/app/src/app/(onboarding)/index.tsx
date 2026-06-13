@@ -178,7 +178,7 @@ export default function OnboardingFirst() {
           {/* Alternative Link */}
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={() => router.push("/signin")}
+            onPress={() => router.push("/(auth)")}
           >
             <Text style={styles.linkText}>I already have an account</Text>
           </TouchableOpacity>

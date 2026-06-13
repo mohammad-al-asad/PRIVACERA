@@ -178,7 +178,7 @@ export default function ProfileScreen() {
 
             {/* Row 3: Log Out */}
             <TouchableOpacity
-              onPress={() => router.navigate("/(auth)/index")}
+              onPress={() => router.navigate("/(auth)")}
               style={styles.rowItem}
               activeOpacity={0.7}
             >

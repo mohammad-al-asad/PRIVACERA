@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "f0f2f2a9-e8f7-4e23-a613-0c104b837144"
+      }
+    },
+    "android": {
+      "package": "com.mohammadalasad.privacera"
+    }
+  }
+}

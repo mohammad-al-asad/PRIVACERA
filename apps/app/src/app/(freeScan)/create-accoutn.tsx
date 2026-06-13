@@ -129,7 +129,7 @@ export default function CreateAccountScreen() {
           {/* Primary Button */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => router.push("/signup" as any)}
+            onPress={() => router.push("/(auth)")}
             style={styles.primaryButton}
           >
             <Text style={styles.primaryButtonText}>Create Account to Save Results</Text>

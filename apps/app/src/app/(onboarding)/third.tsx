@@ -110,7 +110,7 @@ export default function OnboardingThird() {
             {/* Alternative Link */}
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => router.push("/signup")}
+              onPress={() => router.push("/(auth)")}
               style={styles.skipButton}
             >
               <Text style={styles.skipText}>Skip</Text>
